@@ -3,14 +3,14 @@
     "parser": "@typescript-eslint/parser",
     "plugins": [
       "@typescript-eslint",
-      "eslint-comments",
+      "eslint-comments"
     ],
     "env": {
       "node": true,
-      "browser": true,
+      "browser": true
     },
     "parserOptions": {
-      "project": ["./tsconfig.json"],
+      "project": "./tsconfig.json"
     },
     "extends": [
       "airbnb-base",
@@ -18,6 +18,12 @@
       "plugin:@typescript-eslint/recommended",
       "plugin:@typescript-eslint/recommended-requiring-type-checking",
       "plugin:eslint-comments/recommended",
-      "prettier",
+      "prettier"
     ],
+    "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unsafe-argument": "off",
+        "import/prefer-default-export": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off"
+    }
 }
