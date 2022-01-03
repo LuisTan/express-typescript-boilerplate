@@ -1,0 +1,23 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint",
+      "eslint-comments",
+    ],
+    "env": {
+      "node": true,
+      "browser": true,
+    },
+    "parserOptions": {
+      "project": ["./tsconfig.json"],
+    },
+    "extends": [
+      "airbnb-base",
+      "airbnb-typescript/base",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:@typescript-eslint/recommended-requiring-type-checking",
+      "plugin:eslint-comments/recommended",
+      "prettier",
+    ],
+}
