@@ -127,4 +127,9 @@ export class UserController {
   public deleteMany(@QueryParam('ids', { type: String }) ids: string[]): Promise<void> {
     return this.userService.deleteMany(ids);
   }
+
+  @Get('/sample')
+  public sample(): void {
+    this.userService.sample();
+  }
 }

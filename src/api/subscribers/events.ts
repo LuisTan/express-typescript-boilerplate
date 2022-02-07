@@ -10,4 +10,8 @@ export const events = {
   pet: {
     created: 'onPetCreate',
   },
+  sample: {
+    call: 'sample.call',
+    send: 'sample.send',
+  },
 };

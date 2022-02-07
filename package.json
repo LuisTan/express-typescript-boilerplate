@@ -35,6 +35,7 @@
     "w3tec.ch"
   ],
   "dependencies": {
+    "amqplib": "^0.8.0",
     "bcrypt": "^5.0.1",
     "chalk": "^2.4.1",
     "class-transformer": "^0.1.9",
@@ -82,6 +83,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/amqplib": "^0.8.2",
     "@types/bcrypt": "^2.0.0",
     "@types/bluebird": "^3.5.18",
     "@types/chalk": "^2.2.0",

@@ -54,4 +54,15 @@ export class AppUserService {
     }
     await this.userRepository.delete(ids);
   }
+
+  public send(): void {
+    this.eventDispatcher.dispatch(events.sample.send, {
+      queue: 'sample',
+      data: 'testinggg',
+    });
+  }
+
+  public sample(): void {
+    this.log.info(`BRUUUUUUUUUUUUUUUUUUUh gumana`);
+  }
 }

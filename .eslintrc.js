@@ -54,6 +54,5 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off',
     'class-methods-use-this': 'off',
     'no-param-reassign': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'error',
   },
 };

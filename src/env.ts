@@ -71,6 +71,7 @@ export const env = {
     password: getOsEnv('MONITOR_PASSWORD'),
   },
   auth: {
+    enabled: toBool(getOsEnv('AUTH_ENABLED')),
     jwt: {
       enabled: toBool(getOsEnv('JWT_ENABLED')),
       secret: getOsEnv('JWT_SECRET'),
@@ -82,5 +83,13 @@ export const env = {
     rateLimit: toNumber(getOsEnv('RATE_LIMIT')),
     rateWindowTime: toNumber(getOsEnv('RATE_WINDOW_TIME')),
     bodyPayloadLimit: getOsEnv('BODY_PAYLOAD_LIMIT'),
+  },
+  rmq: {
+    host: getOsEnv('RMQ_HOST'),
+    protocol: getOsEnv('RMQ_PROTOCOL'),
+    port: getOsEnv('RMQ_PORT'),
+    queues: {
+      SAMPLE_QUEUE: getOsEnv('SAMPLE_QUEUE'),
+    },
   },
 };
