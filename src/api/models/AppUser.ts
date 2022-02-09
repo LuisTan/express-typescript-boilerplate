@@ -1,83 +1,53 @@
-import * as bcrypt from 'bcrypt';
-import { Exclude } from 'class-transformer';
-import { IsAlpha, IsEmail, IsNotEmpty, IsNumberString, IsUUID } from 'class-validator';
-import { BeforeInsert, Column, Entity, PrimaryColumn } from 'typeorm';
+import { IsAlpha, IsEnum, IsNotEmpty, IsUUID } from 'class-validator';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+
+import { Business } from './Business';
 
 export enum AppUserRole {
-  ADMIN = 'ADMIN',
-  USER = 'USER',
+  VIEWER = 'VIEWER',
+  APPROVER = 'APPROVER',
+}
+
+export interface TBDPermissions {
+  approve_first_level?: boolean;
+  approve_second_level?: boolean;
 }
 
 @Entity({ name: 'app_user' })
 export class AppUser {
-  public static hashPassword(password: string): Promise<string> {
-    return bcrypt.hash(password, 10);
-  }
-
-  public static comparePassword(user: AppUser, password: string): Promise<boolean> {
-    return bcrypt.compare(password, user.password);
-  }
-
   @IsUUID()
+  @IsNotEmpty()
   @PrimaryColumn('uuid')
   public id: string;
 
   @IsNotEmpty()
   @IsAlpha()
-  @Column({ name: 'first_name' })
-  public firstName: string;
-
-  @IsNotEmpty()
-  @IsAlpha()
-  @Column({ name: 'last_name' })
-  public lastName: string;
-
-  @IsNotEmpty()
   @Column()
-  public address: string;
+  public name: string;
 
-  @IsNotEmpty()
-  @IsNumberString()
-  @Column()
-  public postCode: string;
-
-  @IsNotEmpty()
-  @IsNumberString()
-  @Column()
-  public contactNo: string;
-
-  @IsNotEmpty()
-  @IsEmail()
-  @Column({
-    unique: true,
-  })
-  public email: string;
-
-  @IsNotEmpty()
-  @Column({
-    unique: true,
-  })
-  public username: string;
-
-  @IsNotEmpty()
-  @Column()
-  @Exclude()
-  public password: string;
-
+  @IsEnum(AppUserRole)
   @IsNotEmpty()
   @Column({
     type: 'enum',
     enum: AppUserRole,
-    default: AppUserRole.USER,
+    default: AppUserRole.VIEWER,
   })
   public role: AppUserRole;
 
-  public toString(): string {
-    return `${this.firstName} ${this.lastName} (${this.email})`;
-  }
+  @IsUUID()
+  @IsNotEmpty()
+  @Column()
+  public business_id: string;
 
-  @BeforeInsert()
-  public async hashPassword(): Promise<void> {
-    this.password = await AppUser.hashPassword(this.password);
+  @ManyToOne(() => Business)
+  @JoinColumn({ name: 'business_id' })
+  public business: Business;
+
+  @IsNotEmpty()
+  @Column('jsonb', { default: {} })
+  public disbursement_permission: TBDPermissions;
+
+  public toString(): string {
+    return `${this.name}`;
   }
 }

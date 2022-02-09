@@ -34,15 +34,15 @@ export class AuthOService {
 
   public async verifyTokenAndRetrieveUser(token: string): Promise<AppUser> {
     const decodedToken: TDecodedToken = await promisify(jwt.verify)(token, env.auth.jwt.secret);
-    const currentUser = this.userRepository.findOne(decodedToken.id);
+    const currentUser = await this.userRepository.findOne(decodedToken.id);
     return currentUser;
   }
 
-  public async validateUser(username: string, password: string): Promise<AppUser | undefined> {
-    this.log.info('Validate user => ', username);
-    const user = await this.userRepository.findOne({ username });
+  public async validateUser(name: string): Promise<AppUser | undefined> {
+    this.log.info('Validate user => ', name);
+    const user = await this.userRepository.findOne({ name });
 
-    if (!user || !AppUser.comparePassword(user, password)) {
+    if (!user) {
       throw new HttpError(401, 'Incorrect Email or Password');
     }
 

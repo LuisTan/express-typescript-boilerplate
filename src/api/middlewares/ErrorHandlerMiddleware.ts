@@ -15,15 +15,8 @@ export class ErrorHandlerMiddleware implements ExpressErrorMiddlewareInterface {
   public error(error: HttpError, req: express.Request, res: express.Response, next: express.NextFunction): void {
     const errorCode = error.httpCode || 500;
     res.status(errorCode);
-    const err = new JSendError(
-      {
-        name: error.name,
-        message: error.message,
-        // eslint-disable-next-line @typescript-eslint/dot-notation
-        errors: error[`errors`] || [],
-      },
-      errorCode
-    );
+    const name = error.name === 'Error' ? error.message : error.name;
+    const err = new JSendError({ name }, errorCode);
     res.json(classToPlain(err));
 
     if (this.isProduction) {

@@ -23,10 +23,13 @@ export class AuthController {
     @Res() response: express.Response,
     @Body({ required: true }) body: LoginRequest
   ): Promise<LoginResponse> {
-    const { username, password } = body;
-    const user = await this.authOService.validateUser(username, password);
+    const { name } = body;
+    const user = await this.authOService.validateUser(name);
     const token = await this.authOService.createToken(request, response, user);
     const data = new LoginResponse(token);
+    data.name = user.name;
+    data.role = user.role;
+    data.permissions = user.disbursement_permission;
     return data;
   }
 
